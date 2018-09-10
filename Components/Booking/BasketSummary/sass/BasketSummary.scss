@@ -15,16 +15,20 @@
 
     &__container {
         @include cf();
-        padding: $base-unit 0;
+        padding: $half-unit;
 
         @include media('>=tablet') {
-            padding-left: 0;
-            padding-right: 0;
+            padding-left: $quarter-unit;
+            padding-right: $quarter-unit;
+            display: flex;
         }
     }
 
     &__breakdown,
     &__totals {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         background-color: $white;
         border-radius: $border-radius;
         padding: $base-unit $half-unit;
@@ -52,6 +56,13 @@
         }
     }
 
+    &__ksp {
+        text-align: center;
+        color: $color-primary;
+        border-bottom: 1px dashed $pale-grey;
+        padding-bottom: $half-unit;
+        margin-bottom: 18px;
+    }
 
     &__totals-block { /* Totals blocks contain pricing and we need to separate into blocks for the flex layout to work as required, with spacing */
         &:not(:last-child) {
@@ -72,6 +83,32 @@
 
         @include media('>desktop') {
             @include span(7 of 10);
+        }
+
+        p {
+            margin-bottom: $quarter-unit;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            border-bottom: 1px dashed $pale-grey;
+            padding-bottom: $half-unit;
+            margin: 0 0 $half-unit;
+
+            &:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+
+            li {
+                list-style: none;
+                display: inline-block;
+                min-width: 33%;
+                flex-basis: 270px;
+                margin: $quarter-unit 0;
+            }
         }
     }
 
@@ -99,11 +136,15 @@
                 padding-top: $base-unit;
             }
 
+            // Toggling display caused content to jump due to flex display... Gideon
             @include media('>=tablet') {
-                display: none;
+                // visibility: hidden;
+                opacity: 0;
+                transition: opacity .3s ease;
 
                 &--visible {
-                    display: block;
+                    // visibility: visible;
+                    opacity: 1;
                 }
             }
         }
@@ -113,14 +154,15 @@
         @include media('<tablet') {
             display: none;
         }
-        float: right;
+        text-align: right;
     }
 
     /*------------------------------*\
         $PRICING
     /*------------------------------*/
     &__price-row { /* [2] */
-        display: table;
+        display: flex;
+        justify-content: space-between;
         margin-bottom: $quarter-unit;
         width: 100%;
 
@@ -149,10 +191,6 @@
             #{$block}__price-row--secure & {
                 padding: $half-unit;
             }
-        }
-
-        &__price-item {
-
         }
 
         &__price-value {
@@ -184,9 +222,9 @@
     &__essentials-icon,
     &__included-icon {
         margin-left: $quarter-unit / 2;
-    }
 
-    &__included-icon {
+        transition: transform .3s ease;
+
         &--rotated {
             transform: rotate(180deg);
         }
@@ -202,7 +240,6 @@
     /*-------------------------------*/
     &__continue {
         margin: $half-unit 0;
-
     }
 
     &__supplement-text {
